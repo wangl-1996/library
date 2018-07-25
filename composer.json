@@ -1,0 +1,16 @@
+{
+  "name": "wangl-1996/library",
+  "description": "个人代码库",
+  "version": "1.0.0",
+  "type": "library",
+  "keywords": ["王磊", "代码库"],
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "王磊",
+      "email": "1992454838@qq.com",
+      "role": "Developer"
+    }
+  ]
+  "minimum-stability": "dev"
+}
