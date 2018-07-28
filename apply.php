@@ -192,9 +192,9 @@ function pay($data)
 $biz_content = [
     'body'          =>  'pay test',
     'subject'       =>  'test ali pay',
-    'out_trade_no'  =>  '70501111111S001111119',
+    'out_trade_no'  =>  '705011S'.time(),
     'total_amount'  =>  1.00,
-    'seller_id'     =>  '2088102176042878',
+    // 'seller_id'     =>  '2088102176042878',
     'quit_url'      =>  urlencode('http://123.56.86.74/quit.php'),
     'product_code'  =>  'QUICK_WAP_PAY'
 ];
