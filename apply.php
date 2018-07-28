@@ -5,6 +5,8 @@
 # 王磊
 # 1992454838@qq.com
 
+date_default_timezone_set('Asia/Shanghai');
+
 # 姓名
 $name  = $_GET['name'] ?? '';
 # 手机号
@@ -83,23 +85,7 @@ function getOrder()
  */
 function encrypt($data)
 {
-    $privateKey = '-----BEGIN RSA PRIVATE KEY-----
-MIICXQIBAAKBgQCzz1QCVdzRL+zEm53DentQcPGufamku45puysJch7d/AOuX1Nm
-l3jFdDICb8q9hQ+nSeVNBEEX8X8UF5ck0xH6ViJ8KNUl5I9e+znI/FfMoHWctiah
-9Db2dxBmlCb4dokMPrYe3z3dFvX/yD1O+7EonypuEqGjQVYDUypPLoOcOwIDAQAB
-AoGAMS1PCKR7FCtLUipNZ50kBMgfEV4E+6zgMkKibp7rmkLGrvYbVT+wJDC3TLtO
-c67krRgkwn+bXfUKkHAzQjsH+z2GUg7VefwM8No0FHY2b8vqAvX53HYCi1+CfqGZ
-mVWNIbIOnvKY4RfgIWq5TyelduGiodAaKmyEuL28GKUb34ECQQDtXw7/xWcS15nX
-aWiQ6TNhu64vsqoE956ycBw1wTuhd0HDl22EfPg5fjtRvY08yBGlOD/DtDTlj6yc
-G7XS+hAxAkEAwevSx0LsGgC2Wv0Dqi02jDncs2cUVH8F7a0Om/r6B+FMWWia0+3N
-fPUmSTaL28CbBFJz983qlADDzGlm5PwkKwJBAL8LBL1iGUUW9SBkG96Vcd80+Eo3
-V5NL4BPpGytAbEfV/b33wBMjqXxMVl3BW00SEPGSxe8yuGgSLHAv9TTqQeECQQCO
-g+VwE7q4kXVzASdEVd4UyCFup37FamTM+7YU5CoEyIr32myO++FcyD3O6It4gOBs
-GLypjWesRbOf8oZwGu3pAkAy70dUII8FqNyMLKNGOaJcg41+amLRgpUr50m1f+f4
-tb880iTF3liZFotgWOiaRUsu5Wf/n5nukbDca/ddLCzo
------END RSA PRIVATE KEY-----';
-
-    $aes = new \wangl_1996\library\aes($privateKey);
+    $aes = new \wangl_1996\library\aes('FTSSgfjVaXd64T4TyGvmvA==');
 
     return $aes->encrypt($data);
 }
@@ -155,7 +141,7 @@ function pay($data)
 
     echo '</form>';
 
-    echo '<script>var pay = document.querySelector("#pay"); if (pay) { pay.submit(); } </script>';
+    // echo '<script>var pay = document.querySelector("#pay"); if (pay) { pay.submit(); } </script>';
 }
 
 $biz_content = [
