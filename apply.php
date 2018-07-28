@@ -7,6 +7,8 @@
 
 date_default_timezone_set('Asia/Shanghai');
 
+require './src/aes.php';
+
 # 姓名
 $name  = $_GET['name'] ?? '';
 # 手机号
@@ -18,6 +20,21 @@ famku45puysJch7d/AOuX1Nml3jFdDICb8q9hQ+nSeVNBEEX8X8UF5ck0xH6ViJ8
 KNUl5I9e+znI/FfMoHWctiah9Db2dxBmlCb4dokMPrYe3z3dFvX/yD1O+7Eonypu
 EqGjQVYDUypPLoOcOwIDAQAB
 -----END PUBLIC KEY-----';
+
+/**
+ * @return null|\wangl_1996\library\aes
+ * @throws Exception
+ */
+function getAes()
+{
+    static $aes = null;
+
+    if (is_null($aes)) {
+        $aes = new \wangl_1996\library\aes('FTSSgfjVaXd64T4TyGvmvA==');
+    }
+
+    return $aes;
+}
 
 //
 // $pKey = openssl_pkey_get_public($publicKey);
@@ -42,7 +59,7 @@ var_dump($encrypt);
 var_dump($aes->decrypt($encrypt));
 */
 
-require './src/aes.php';
+
 
 /**
  * @param $signString
@@ -85,9 +102,21 @@ function getOrder()
  */
 function encrypt($data)
 {
-    $aes = new \wangl_1996\library\aes('FTSSgfjVaXd64T4TyGvmvA==');
+    $aes = getAes();
 
     return $aes->encrypt($data);
+}
+
+/**
+ * @param $data
+ * @return string
+ * @throws Exception
+ */
+function decrypt($data)
+{
+    $aes = getAes();
+
+    return $aes->decrypt($data);
 }
 
 function pay($data)
@@ -96,8 +125,24 @@ function pay($data)
         $data = json_encode($data);
     }
 
+    echo '<pre>';
+    var_dump($data);
+    echo '</pre>';
+
     try {
         $data = encrypt($data);
+    } catch (\Exception $e) {
+        die($e->getMessage());
+    }
+
+    echo '<pre>';
+    var_dump($data);
+    echo '</pre>';
+
+    try {
+        echo '<pre>';
+        var_dump(decrypt($data));
+        echo '</pre>';
     } catch (\Exception $e) {
         die($e->getMessage());
     }
@@ -106,13 +151,13 @@ function pay($data)
         'app_id'        =>  '2016091700532623',
         'method'        =>  'alipay.trade.wap.pay',
         'format'        =>  'JSON',
-        'return_url'    =>  'http://123.56.86.74/result.php',
+        'return_url'    =>  urlencode('http://123.56.86.74/result.php'),
         'charset'       =>  'utf-8',
         'sign_type'     =>  'RSA',
         'sign'          =>  '',
         'timestamp'     =>  date('Y-m-d H:i:s'),
         'version'       =>  '1.0',
-        'notify_url'    =>  'http://123.56.86.74/src/ali/pay/notify.php',
+        'notify_url'    =>  urlencode('http://123.56.86.74/src/ali/pay/notify.php'),
         'biz_content'   =>  $data
     ];
 
@@ -141,7 +186,7 @@ function pay($data)
 
     echo '</form>';
 
-    echo '<script>var pay = document.querySelector("#pay"); if (pay) { pay.submit(); } </script>';
+    echo '<script>var pay = document.querySelector("#pay"); if (pay && confirm("提交") !== false) { pay.submit(); } </script>';
 }
 
 $biz_content = [
@@ -150,7 +195,7 @@ $biz_content = [
     'out_trade_no'  =>  '70501111111S001111119',
     'total_amount'  =>  1.00,
     'seller_id'     =>  '2088102176042878',
-    'quit_url'      =>  'http://123.56.86.74/quit.php',
+    'quit_url'      =>  urlencode('http://123.56.86.74/quit.php'),
     'product_code'  =>  'QUICK_WAP_PAY'
 ];
 

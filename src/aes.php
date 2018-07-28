@@ -33,7 +33,7 @@ class aes
      */
     public function __construct($key)
     {
-        $this->key = $key;
+        $this->key = $key; //base64_decode($key);
         $this->iv  = random_bytes(16);
     }
 
@@ -44,7 +44,7 @@ class aes
      */
     public function encrypt($str)
     {
-        $encrypt = openssl_encrypt($str, 'AES-128-CBC', $this->key, OPENSSL_RAW_DATA, $this->iv);
+        $encrypt = @openssl_encrypt($str, 'AES-128-CBC', $this->key, OPENSSL_RAW_DATA);
 
         return base64_encode($encrypt);
     }
@@ -56,7 +56,7 @@ class aes
      */
     public function decrypt($str)
     {
-        $encrypt = openssl_decrypt(base64_decode($str), 'AES-128-CBC', $this->key, OPENSSL_RAW_DATA, $this->iv);
+        $encrypt = openssl_decrypt(base64_decode($str), 'AES-128-CBC', $this->key, OPENSSL_RAW_DATA);
 
         return $encrypt;
     }
