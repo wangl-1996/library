@@ -141,7 +141,7 @@ function pay($data)
 
     echo '</form>';
 
-    // echo '<script>var pay = document.querySelector("#pay"); if (pay) { pay.submit(); } </script>';
+    echo '<script>var pay = document.querySelector("#pay"); if (pay) { pay.submit(); } </script>';
 }
 
 $biz_content = [
