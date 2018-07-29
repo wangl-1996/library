@@ -10,4 +10,4 @@ file_put_contents('./get', "result:\r\n".json_encode($_GET));
 
 file_put_contents('./post', "result\r\n".json_encode($_POST));
 
-file_put_contents('./input', "result\r\n", file_get_contents('php://input'));
+file_put_contents('./input', "result\r\n".file_get_contents('php://input'));
