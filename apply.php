@@ -40,10 +40,10 @@ echo '</pre>';
 */
 //业务参数
 $biz_content = [
-    'body'          =>  '商品',
-    'subject'       =>  '测试商品',
+    'body'          =>  'test',
+    'subject'       =>  'test pay',
     'out_trade_no'  =>  '705011S'.time(),
-    'total_amount'  =>  9.99,
+    'total_amount'  =>  1,
     'seller_id'     =>  '2088102176042878',
     'quit_url'      =>  'http://123.56.86.74/quit.php',
     'productCode'   =>  'QUICK_WAP_PAY'
