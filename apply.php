@@ -46,7 +46,7 @@ $biz_content = [
     'total_amount'  =>  9.99,
     'seller_id'     =>  '2088102176042878',
     'quit_url'      =>  'http://123.56.86.74/quit.php',
-    'product_code'  =>  'QUICK_WAP_PAY'
+    'productCode'   =>  'QUICK_WAP_PAY'
 ];
 
 //系统参数
