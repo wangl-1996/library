@@ -9,4 +9,4 @@ file_put_contents('./get', "quit:\r\n".json_encode($_GET));
 
 file_put_contents('./post', "quit\r\n".json_encode($_POST));
 
-file_put_contents('./input', "quit\r\n", file_get_contents('php://input'));
+file_put_contents('./input', "quit\r\n".file_get_contents('php://input'));

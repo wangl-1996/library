@@ -111,12 +111,6 @@ class sign
                 }
             }
 
-            if ($key == 'notify_url') {
-                echo '<pre>';
-                var_dump($splitString.$key.'='.$val);
-                echo '</pre>';
-            }
-
             $string .= $splitString.$key.'='.$val;
             $splitString = $split;
         }
