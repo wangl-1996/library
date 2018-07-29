@@ -7,8 +7,90 @@
 
 date_default_timezone_set('Asia/Shanghai');
 
+$price = $_POST['price'] ?? '';
+
+if (!$price) {
+    die(json_encode(['code' => 1, 'info' => '金额不正确']));
+}
+
 require './src/openssl/sign.php';
 require './src/openssl/encrypt.php';
+
+//业务参数
+$biz_content = [
+    'body'          =>  '测试',
+    'subject'       =>  '测试支付',
+    'out_trade_no'  =>  '705011S'.time(),
+    'total_amount'  =>  (string)$price, //json编码后会导致浮点数精度丢失的问题
+    'seller_id'     =>  '2088102176042878',
+    'quit_url'      =>  'http://123.56.86.74/quit.php',
+    'productCode'   =>  'QUICK_WAP_PAY'
+];
+
+//系统参数
+$param = [
+    'app_id'        =>  '2016091700532623',
+    'method'        =>  'alipay.trade.app.pay',
+    'format'        =>  'JSON',
+    'return_url'    =>  'http://123.56.86.74/result.php',
+    'charset'       =>  'utf-8',
+    'sign_type'     =>  'RSA',
+    'sign'          =>  '',
+    'timestamp'     =>  date('Y-m-d H:i:s'),
+    'version'       =>  '1.0',
+    'notify_url'    =>  'http://123.56.86.74/src/ali/pay/notify.php',
+    'biz_content'   =>  json_encode($biz_content, JSON_UNESCAPED_UNICODE)
+];
+
+$sign = new \wangl_1996\library\src\openssl\sign();
+
+$sign->priKey = $sign->formatPriKey('MIICXQIBAAKBgQCzz1QCVdzRL+zEm53DentQcPGufamku45puysJch7d/AOuX1Nml3jFdDICb8q9hQ+nSeVNBEEX8X8UF5ck0xH6ViJ8KNUl5I9e+znI/FfMoHWctiah9Db2dxBmlCb4dokMPrYe3z3dFvX/yD1O+7EonypuEqGjQVYDUypPLoOcOwIDAQABAoGAMS1PCKR7FCtLUipNZ50kBMgfEV4E+6zgMkKibp7rmkLGrvYbVT+wJDC3TLtOc67krRgkwn+bXfUKkHAzQjsH+z2GUg7VefwM8No0FHY2b8vqAvX53HYCi1+CfqGZmVWNIbIOnvKY4RfgIWq5TyelduGiodAaKmyEuL28GKUb34ECQQDtXw7/xWcS15nXaWiQ6TNhu64vsqoE956ycBw1wTuhd0HDl22EfPg5fjtRvY08yBGlOD/DtDTlj6ycG7XS+hAxAkEAwevSx0LsGgC2Wv0Dqi02jDncs2cUVH8F7a0Om/r6B+FMWWia0+3NfPUmSTaL28CbBFJz983qlADDzGlm5PwkKwJBAL8LBL1iGUUW9SBkG96Vcd80+Eo3V5NL4BPpGytAbEfV/b33wBMjqXxMVl3BW00SEPGSxe8yuGgSLHAv9TTqQeECQQCOg+VwE7q4kXVzASdEVd4UyCFup37FamTM+7YU5CoEyIr32myO++FcyD3O6It4gOBsGLypjWesRbOf8oZwGu3pAkAy70dUII8FqNyMLKNGOaJcg41+amLRgpUr50m1f+f4tb880iTF3liZFotgWOiaRUsu5Wf/n5nukbDca/ddLCzo');
+
+ksort($param);
+
+$signString = $sign->formatSignString($param, '&', function ($val) {
+    //过滤掉空的参数
+    if (null === $val || '' == trim($val)) {
+        return null;
+    }
+
+    return $val;
+});
+
+$param['sign'] = $sign->getSign($signString);
+
+die(json_encode([
+    'code'  =>  0,
+    'data'  =>  http_build_query($param)
+]));
+
+// pay($param);
+
+/**
+ * @param $data
+ */
+function pay($data)
+{
+    if (false !== stripos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient')) {
+        header('location:https://openapi.alipaydev.com/gateway.do?'.http_build_query($data));
+        die;
+    }
+
+    echo '<form action="https://openapi.alipaydev.com/gateway.do?charset='.$data['charset'].'" method="post" id="pay">';
+
+    foreach ($data as $key => $val) {
+        $val = str_replace("'","&apos;", $val);
+        $key = str_replace("'","&apos;", $key);
+        echo "<input name='".$key."' value='".mb_convert_encoding($val, $data['charset'])."' type='hidden' />";
+    }
+
+    echo '</form>';
+
+    echo '<script>var pay = document.querySelector("#pay"); if (pay) { pay.submit(); } </script>';
+}
+
+
+
 /*
 $arr = json_decode('{"gmt_create":"2018-07-29 00:12:42","charset":"UTF-8","seller_email":"konvyp7160@sandbox.com","subject":"test ali pay","sign":"x7cau2E3a7pN7phEVguuVCGRreQka8A21uHghGIVhOj\/wJI6oTcf0ukUMXhWcy4NKu4u3NlCyjZekrMDFZceBgKlbrptbeZsp9LJ0CG6BHJ1lzaVExmNdYxLtAesZwUtiY8ceX600LOLHdgnCdFLCvZdqW3iAJXv83ubUWNQPz0=","body":"pay test","buyer_id":"2088102176376102","invoice_amount":"1.00","notify_id":"ba1b392470cdc76717536c0c58493fbgru","fund_bill_list":"[{\"amount\":\"1.00\",\"fundChannel\":\"ALIPAYACCOUNT\"}]","notify_type":"trade_status_sync","trade_status":"TRADE_SUCCESS","receipt_amount":"1.00","app_id":"2016091700532623","buyer_pay_amount":"1.00","sign_type":"RSA","seller_id":"2088102176042878","gmt_payment":"2018-07-29 00:12:42","notify_time":"2018-07-29 00:17:30","version":"1.0","out_trade_no":"705011S1532794345","total_amount":"1.00","trade_no":"2018072921001004100200710099","auth_app_id":"2016091700532623","buyer_logon_id":"vyv***@sandbox.com","point_amount":"0.00"}', true);
 
@@ -38,72 +120,3 @@ var_dump($verify->pubKey);
 var_dump($verify->verify($signString, $sign));
 echo '</pre>';
 */
-//业务参数
-$biz_content = [
-    'body'          =>  '测试',
-    'subject'       =>  '测试支付',
-    'out_trade_no'  =>  '705011S'.time(),
-    'total_amount'  =>  '9.99', //json编码后会导致浮点数精度丢失的问题
-    'seller_id'     =>  '2088102176042878',
-    'quit_url'      =>  'http://123.56.86.74/quit.php',
-    'productCode'   =>  'QUICK_WAP_PAY'
-];
-
-//系统参数
-$param = [
-    'app_id'        =>  '2016091700532623',
-    'method'        =>  'alipay.trade.wap.pay',
-    'format'        =>  'JSON',
-    'return_url'    =>  'http://123.56.86.74/result.php',
-    'charset'       =>  'utf-8',
-    'sign_type'     =>  'RSA',
-    'sign'          =>  '',
-    'timestamp'     =>  date('Y-m-d H:i:s'),
-    'version'       =>  '1.0',
-    'notify_url'    =>  'http://123.56.86.74/src/ali/pay/notify.php',
-    'biz_content'   =>  json_encode($biz_content, JSON_UNESCAPED_UNICODE)
-];
-
-$sign = new \wangl_1996\library\src\openssl\sign();
-
-$sign->priKey = $sign->formatPriKey('MIICXQIBAAKBgQCzz1QCVdzRL+zEm53DentQcPGufamku45puysJch7d/AOuX1Nml3jFdDICb8q9hQ+nSeVNBEEX8X8UF5ck0xH6ViJ8KNUl5I9e+znI/FfMoHWctiah9Db2dxBmlCb4dokMPrYe3z3dFvX/yD1O+7EonypuEqGjQVYDUypPLoOcOwIDAQABAoGAMS1PCKR7FCtLUipNZ50kBMgfEV4E+6zgMkKibp7rmkLGrvYbVT+wJDC3TLtOc67krRgkwn+bXfUKkHAzQjsH+z2GUg7VefwM8No0FHY2b8vqAvX53HYCi1+CfqGZmVWNIbIOnvKY4RfgIWq5TyelduGiodAaKmyEuL28GKUb34ECQQDtXw7/xWcS15nXaWiQ6TNhu64vsqoE956ycBw1wTuhd0HDl22EfPg5fjtRvY08yBGlOD/DtDTlj6ycG7XS+hAxAkEAwevSx0LsGgC2Wv0Dqi02jDncs2cUVH8F7a0Om/r6B+FMWWia0+3NfPUmSTaL28CbBFJz983qlADDzGlm5PwkKwJBAL8LBL1iGUUW9SBkG96Vcd80+Eo3V5NL4BPpGytAbEfV/b33wBMjqXxMVl3BW00SEPGSxe8yuGgSLHAv9TTqQeECQQCOg+VwE7q4kXVzASdEVd4UyCFup37FamTM+7YU5CoEyIr32myO++FcyD3O6It4gOBsGLypjWesRbOf8oZwGu3pAkAy70dUII8FqNyMLKNGOaJcg41+amLRgpUr50m1f+f4tb880iTF3liZFotgWOiaRUsu5Wf/n5nukbDca/ddLCzo');
-
-ksort($param);
-
-$signString = $sign->formatSignString($param, '&', function ($val) {
-    //过滤掉空的参数
-    if (null === $val || '' == trim($val)) {
-        return null;
-    }
-
-    return $val;
-});
-
-$param['sign'] = $sign->getSign($signString);
-
-pay($param);
-
-/**
- * @param $data
- */
-function pay($data)
-{
-    if (false !== stripos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient')) {
-        header('location:https://openapi.alipaydev.com/gateway.do?'.http_build_query($data));
-        die;
-    }
-
-    echo '<form action="https://openapi.alipaydev.com/gateway.do?charset='.$data['charset'].'" method="post" id="pay">';
-
-    foreach ($data as $key => $val) {
-        $val = str_replace("'","&apos;", $val);
-        $key = str_replace("'","&apos;", $key);
-        echo "<input name='".$key."' value='".mb_convert_encoding($val, $data['charset'])."' type='hidden' />";
-    }
-
-    echo '</form>';
-
-    echo '<script>var pay = document.querySelector("#pay"); if (pay) { pay.submit(); } </script>';
-}
-
-
