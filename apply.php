@@ -88,6 +88,11 @@ pay($param);
  */
 function pay($data)
 {
+    if (false !== stripos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient')) {
+        header('location:https://openapi.alipaydev.com/gateway.do?'.http_build_query($data));
+        die;
+    }
+
     echo '<form action="https://openapi.alipaydev.com/gateway.do?charset='.$data['charset'].'" method="post" id="pay">';
 
     foreach ($data as $key => $val) {
