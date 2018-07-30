@@ -103,7 +103,7 @@ if (!isset($_SESSION['openid'])) {
         手机号：<input type="text" name="phone" value="" placeholder="手机号" style="border: 1px solid #ccc; height: 1.5rem;" />
     </p>
     <p>
-        金&nbsp;&nbsp;&nbsp;额：<input type="number" name="price" value="" placeholder="支付金额" style="border: 1px solid #ccc; height: 1.5rem;" />
+        金&nbsp;&nbsp;&nbsp;额：<input type="number" step="0.01" name="price" value="" placeholder="支付金额" style="border: 1px solid #ccc; height: 1.5rem;" />
     </p>
     <p>
         <button style="border: 1px solid #ccc;">提交</button>
