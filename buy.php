@@ -110,14 +110,14 @@ $simplexml = simplexml_load_string($res, 'SimpleXMLElement', LIBXML_NOCDATA);
 curl_close($ch);
 
 //解析返回内容
-if (false === $res) {
-    die(json_encode(['code' => 1, 'info' => 'error: get prepay id.']));
+if (false === $simplexml) {
+    die(json_encode(['code' => 1, 'info' => 'error: get prepay id.', 'data' => $simplexml]));
 }
 
 settype($simplexml, 'array');
 
 if (!isset($simplexml['prepay_id'])) {
-    die(json_encode(['code' => 1, 'info' => 'error: get prepay id.']));
+    die(json_encode(['code' => 1, 'info' => 'error: get prepay id.', 'data' => $simplexml]));
 }
 
 $data = [
