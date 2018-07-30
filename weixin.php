@@ -90,10 +90,10 @@ if (!isset($_SESSION['openid'])) {
 </head>
 <body>
 <p>
-    谁的青春不迷茫
+    <?= $_SESSION['nickname'] ?>
 </p>
 <p>
-    <img src="https://pay.weixin.qq.com/index.php/public/chatroom/url_to_qrcode?url=https%3A%2F%2Fweixin.qq.com%2Fg%2FAb6vB3PzgdFL9IPk" alt="">
+    <img src="<?= $_SESSION['headimgurl'] ?>" alt="">
 </p>
 <form action="/apply.php" id="pay">
     <p>
