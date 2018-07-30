@@ -19,9 +19,9 @@ define('APP_ID', 'wx60ef890ebfb97045');
 //商户号
 define('MCH_ID', '1504890621');
 
-// define('KEY', 'f6066bb1118890c601699d8hh89786d8');
+define('KEY', 'f6066bb1118890c601699d8hh89786d8');
 
-define('KEY', 'a3ba83f52525e8991218eb8b5c5b3d59');
+// define('KEY', 'a3ba83f52525e8991218eb8b5c5b3d59');
 
 $sign = new \wangl_1996\library\src\openssl\sign();
 
