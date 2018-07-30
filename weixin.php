@@ -73,6 +73,7 @@ if (!isset($_SESSION['openid'])) {
     $res = json_decode($res, true);
 
     if (null == $res || !isset($res['nickname'])) {
+        var_dump($res);
         die('获取用户信息失败');
     }
 
