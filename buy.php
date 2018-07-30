@@ -35,6 +35,8 @@ function buildXml(array $data)
         $xml .= "<{$key}>".$val."</{$key}>";
     }
 
+    $xml .= '</xml>';
+
     return $xml;
 }
 
