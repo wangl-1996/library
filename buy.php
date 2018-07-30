@@ -21,7 +21,7 @@ define('MCH_ID', '1504890621');
 
 // define('KEY', 'f6066bb1118890c601699d8hh89786d8');
 
-define('KEY', 'PHhtbD4KICA8cmV0dXJuX2NvZGU+PCFbQ0RBVEFbRkFJTF1dPjwvcmV0dXJuX2NvZGU+CiAgPHJldG1zZz48IVtDREFUQVvor7fnoa7orqTor7fmsYLlj4LmlbDmmK/lkKbmraPnoa5wYXJhbSBtY2hfaWQgaW52YWxpZF1dPjwvcmV0bXNnPgogIDxyZXRjb2RlPjwhW0NEQVRBWzFdXT48L3JldGNvZGU+CjwveG1sPg==');
+define('KEY', 'a3ba83f52525e8991218eb8b5c5b3d59');
 
 $sign = new \wangl_1996\library\src\openssl\sign();
 
