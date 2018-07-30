@@ -101,7 +101,7 @@ $signString .= '&key='.KEY;
 
 $data['sign'] = strtoupper(md5($signString));
 
-$url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
+$url = 'https://api.mch.weixin.qq.com/sandboxnew/pay/unifiedorder';
 
 $ch = curl_init();
 
