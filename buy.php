@@ -99,7 +99,7 @@ $signString = $sign->formatSignString($data, '&', function ($val) {
 
 $signString .= '&key='.KEY;
 
-$data['sign'] = md5($signString);
+$data['sign'] = strtoupper(md5($signString));
 
 $url = 'https://api.mch.weixin.qq.com/sandboxnew/pay/unifiedorder';
 
@@ -125,7 +125,7 @@ if (false === $simplexml) {
 settype($simplexml, 'array');
 
 if (!isset($simplexml['prepay_id'])) {
-    die(json_encode(['code' => 1, 'info' => 'error: get prepay id.', 'data' => $simplexml]));
+    die(json_encode(['code' => 1, 'info' => 'error: get prepay id.', 'data' => $simplexml, 'sgin' => $signString]));
 }
 
 $data = [
