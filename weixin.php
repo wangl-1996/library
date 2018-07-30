@@ -47,7 +47,7 @@ if (!isset($_SESSION['openid'])) {
     $redirect_uri = 'http://passport.guixue.com/ywl.php';
 
     //获取code地址
-    $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' . APP_ID . '&redirect_uri=' . urlencode($redirect_uri) . '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+    $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' . APP_ID . '&redirect_uri=' . urlencode($redirect_uri) . '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
 
     if (!isset($_GET['code'])) {
         header('location:' . $url);
@@ -67,7 +67,7 @@ if (!isset($_SESSION['openid'])) {
     $_SESSION['access_token'] = $res['access_token'];
     $_SESSION['openid'] = $res['openid'];
 
-    $url = 'https://api.weixin.qq.com/sns/userinfo?access_token=' . $res['access_token'] . '&openid=' . $res['openid'] . '&lang=zh_CN';
+    $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$res['access_token'].'&openid='.$res['openid'].'&lang=zh_CN';
 
     $res = get($url);
     $res = json_decode($res, true);
