@@ -134,8 +134,7 @@ $data = [
     'nonceStr'  =>  md5(time()),
     'package'   =>  'prepay_id='.$simplexml['prepay_id'],
     'signType'  =>  'MD5',
-    'paySign'   =>  '',
-    'total_fee' =>  $price
+    'paySign'   =>  ''
 ];
 
 ksort($data);
