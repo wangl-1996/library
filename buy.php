@@ -97,7 +97,7 @@ $signString = $sign->formatSignString($data, '&', function ($val) {
     return $val;
 });
 
-$signString .= 'key='.KEY;
+$signString .= '&key='.KEY;
 
 $data['sign'] = md5($signString);
 
