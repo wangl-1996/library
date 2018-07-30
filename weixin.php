@@ -47,14 +47,14 @@ if (!isset($_SESSION['openid'])) {
     $redirect_uri = 'http://passport.guixue.com/ywl.php';
 
     //获取code地址
-    $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.APP_ID.'&redirect_uri='.urlencode($redirect_uri).'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+    $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' . APP_ID . '&redirect_uri=' . urlencode($redirect_uri) . '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
 
     if (!isset($_GET['code'])) {
-        header('location:'.$url);
+        header('location:' . $url);
         die;
     }
 
-    $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.APP_ID.'&secret='.APP_SECRET.'&code='.$_GET['code'].'&grant_type=authorization_code';
+    $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' . APP_ID . '&secret=' . APP_SECRET . '&code=' . $_GET['code'] . '&grant_type=authorization_code';
 
     $res = get($url);
     $res = json_decode($res, true);
@@ -67,7 +67,7 @@ if (!isset($_SESSION['openid'])) {
     $_SESSION['access_token'] = $res['access_token'];
     $_SESSION['openid'] = $res['openid'];
 
-    $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$res['access_token'].'&openid='.$res['openid'].'&lang=zh_CN';
+    $url = 'https://api.weixin.qq.com/sns/userinfo?access_token=' . $res['access_token'] . '&openid=' . $res['openid'] . '&lang=zh_CN';
 
     $res = get($url);
     $res = json_decode($res, true);
@@ -78,6 +78,7 @@ if (!isset($_SESSION['openid'])) {
 
     $_SESSION['nickname'] = $res['nickname'];
     $_SESSION['headimgurl'] = $res['headimgurl'];
+}
 ?>
 
 <html>
@@ -87,26 +88,26 @@ if (!isset($_SESSION['openid'])) {
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 </head>
 <body>
+<p>
+    谁的青春不迷茫
+</p>
+<p>
+    <img src="https://pay.weixin.qq.com/index.php/public/chatroom/url_to_qrcode?url=https%3A%2F%2Fweixin.qq.com%2Fg%2FAb6vB3PzgdFL9IPk" alt="">
+</p>
+<form action="/apply.php" id="pay">
     <p>
-        谁的青春不迷茫
+        姓&nbsp;&nbsp;&nbsp;名：<input type="text" name="name" value="" placeholder="姓名" style="border: 1px solid #ccc; height: 1.5rem;" />
     </p>
     <p>
-        <img src="https://pay.weixin.qq.com/index.php/public/chatroom/url_to_qrcode?url=https%3A%2F%2Fweixin.qq.com%2Fg%2FAb6vB3PzgdFL9IPk" alt="">
+        手机号：<input type="text" name="phone" value="" placeholder="手机号" style="border: 1px solid #ccc; height: 1.5rem;" />
     </p>
-    <form action="/apply.php" id="pay">
-        <p>
-            姓&nbsp;&nbsp;&nbsp;名：<input type="text" name="name" value="" placeholder="姓名" style="border: 1px solid #ccc; height: 1.5rem;" />
-        </p>
-        <p>
-            手机号：<input type="text" name="phone" value="" placeholder="手机号" style="border: 1px solid #ccc; height: 1.5rem;" />
-        </p>
-        <p>
-            金&nbsp;&nbsp;&nbsp;额：<input type="number" name="price" value="" placeholder="支付金额" style="border: 1px solid #ccc; height: 1.5rem;" />
-        </p>
-        <p>
-            <button style="border: 1px solid #ccc;">提交</button>
-        </p>
-    </form>
+    <p>
+        金&nbsp;&nbsp;&nbsp;额：<input type="number" name="price" value="" placeholder="支付金额" style="border: 1px solid #ccc; height: 1.5rem;" />
+    </p>
+    <p>
+        <button style="border: 1px solid #ccc;">提交</button>
+    </p>
+</form>
 </body>
 <script>
     var lock  = true;
