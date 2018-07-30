@@ -19,9 +19,9 @@ define('APP_ID', 'wx60ef890ebfb97045');
 //商户号
 define('MCH_ID', '1504890621');
 
-define('KEY', 'f6066bb1118890c601699d8hh89786d8');
+// define('KEY', 'f6066bb1118890c601699d8hh89786d8');
 
-// define('KEY', 'a3ba83f52525e8991218eb8b5c5b3d59');
+define('KEY', 'ac00ffb8c82bff681561de95423d3ab1');
 
 $sign = new \wangl_1996\library\src\openssl\sign();
 
@@ -75,7 +75,7 @@ $data = [
     'mch_id'    =>  MCH_ID,
     'nonce_str' =>  md5(rand(1, 100)),
     'sign'      =>  '',
-    'sign_type' =>  'md5',
+    'sign_type' =>  'MD5',
     'body'      =>  '测试商品',
     'out_trade_no'  =>  'S0000'.time(),
     'total_fee' =>  $price,
@@ -101,7 +101,7 @@ $signString .= '&key='.KEY;
 
 $data['sign'] = strtoupper(md5($signString));
 
-$url = 'https://api.mch.weixin.qq.com/sandboxnew/pay/unifiedorder';
+$url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
 
 $ch = curl_init();
 
@@ -147,6 +147,8 @@ $signString = $sign->formatSignString($data, '&', function ($val) {
 
     return $val;
 });
+
+$signString .= '&key='.KEY;
 
 $data['paySign'] = md5($signString);
 
