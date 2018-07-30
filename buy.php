@@ -105,7 +105,7 @@ curl_setopt_array($ch, [
 ]);
 
 $res = curl_exec($ch);
-$simplexml = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+$simplexml = simplexml_load_string($res, 'SimpleXMLElement', LIBXML_NOCDATA);
 
 curl_close($ch);
 
