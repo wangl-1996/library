@@ -10,3 +10,5 @@ file_put_contents('./notify', "quit:\r\n".json_encode($_GET));
 file_put_contents('./notify', "quit\r\n".json_encode($_POST));
 
 file_put_contents('./notify', "quit\r\n".file_get_contents('php://input'));
+
+die('<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>');
