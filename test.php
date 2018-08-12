@@ -5,6 +5,8 @@
 # 王磊
 # 1992454838@qq.com
 
+date_default_timezone_set('PRC');
+
 require './src/openssl/sign.php';
 
 /**

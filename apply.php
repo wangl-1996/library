@@ -89,8 +89,6 @@ function pay($data)
     echo '<script>var pay = document.querySelector("#pay"); if (pay) { pay.submit(); } </script>';
 }
 
-
-
 /*
 $arr = json_decode('{"gmt_create":"2018-07-29 00:12:42","charset":"UTF-8","seller_email":"konvyp7160@sandbox.com","subject":"test ali pay","sign":"x7cau2E3a7pN7phEVguuVCGRreQka8A21uHghGIVhOj\/wJI6oTcf0ukUMXhWcy4NKu4u3NlCyjZekrMDFZceBgKlbrptbeZsp9LJ0CG6BHJ1lzaVExmNdYxLtAesZwUtiY8ceX600LOLHdgnCdFLCvZdqW3iAJXv83ubUWNQPz0=","body":"pay test","buyer_id":"2088102176376102","invoice_amount":"1.00","notify_id":"ba1b392470cdc76717536c0c58493fbgru","fund_bill_list":"[{\"amount\":\"1.00\",\"fundChannel\":\"ALIPAYACCOUNT\"}]","notify_type":"trade_status_sync","trade_status":"TRADE_SUCCESS","receipt_amount":"1.00","app_id":"2016091700532623","buyer_pay_amount":"1.00","sign_type":"RSA","seller_id":"2088102176042878","gmt_payment":"2018-07-29 00:12:42","notify_time":"2018-07-29 00:17:30","version":"1.0","out_trade_no":"705011S1532794345","total_amount":"1.00","trade_no":"2018072921001004100200710099","auth_app_id":"2016091700532623","buyer_logon_id":"vyv***@sandbox.com","point_amount":"0.00"}', true);
 

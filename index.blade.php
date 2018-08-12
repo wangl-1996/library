@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 </head>
 <body>
-    <form action="/apply.php" id="pay">
+    <form action="/apply.php" id="pay" method="post">
         <p>
             姓&nbsp;&nbsp;&nbsp;名：<input type="text" name="name" value="" placeholder="姓名" style="border: 1px solid #ccc; height: 1.5rem;" />
         </p>
